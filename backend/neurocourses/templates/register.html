@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<section class="register">
+    <div class="register-container">
+        <h1>Регистрация</h1>
+        <form method="post" action="{% url 'register' %}">
+            {% csrf_token %}
+            <div class="input-group">
+                {{ form.email }}
+                {{ form.username}}
+                {{ form.first_name }}
+                {{ form.last_name }}
+                {{ form.password1 }}
+                {{ form.password2 }}
+                <div class="form-check">
+                    {{ form.user_type }}
+                </div>
+            </div>
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+        {% if form.errors %}
+        <div class="error-messages">
+
+            <ul>
+                {% for field in form %}
+                {% for error in field.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+
+
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

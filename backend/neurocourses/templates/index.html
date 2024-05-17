@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<section class="top__courses">
+    <div class="container">
+    <h1>Наши Лучшие курсы</h1>
+</div>
+<div class="container-gpt">
+    <div class="main-block">
+      <img src="{% static 'img/courses/course1.png' %}"  alt="Main Image">
+      <div class="text-block">
+        <span class="category">Сети</span>
+        <h2>Что такое ChatGPT?</h2>
+        <p>23 апреля 2024</p>
+      </div>
+    </div>
+    <div class="top-right-block">
+      <img src="{% static 'img/courses/course2.png' %}" alt="Top Right Image">
+      <div class="text-block">
+        <span class="category">Сети</span>
+        <h2>Что такое ChatGPT?</h2>
+        <p>23 апреля 2024</p>
+      </div>
+    </div>
+    <div class="bottom-right-block">
+      <img src="{% static 'img/courses/course3.png' %}" alt="Bottom Left Image">
+      <div class="text-block">
+        <span class="category">Сети</span>
+        <h2>Что такое ChatGPT?</h2>
+        <p>23 апреля 2024</p>
+      </div>
+    </div>
+    <div class="bottom-right-block">
+      <img src="{% static 'img/courses/course4.png' %}" alt="Bottom Right Image">
+      <div class="text-block">
+        <span class="category">Сети</span>
+        <h2>Что такое ChatGPT?</h2>
+        <p>23 апреля 2024</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

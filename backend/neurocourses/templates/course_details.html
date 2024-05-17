@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<section class="course__details">
+    <div class="container_for-cart">
+        <div class="course__cart">
+            <div class="course__cart-image">
+                <img src="{{ course.image.url }}" alt="{{ course.title }}">
+            </div>
+            <div class="course__cart-container">
+                <div class="course__cart-price">
+                    {{ course.price }} р
+                </div>
+                <a href="#" class="course__cart-enroll">Перейти в корзину</a>
+                <div class="course__cart-includes">Этот курс включает:</div>
+                <ul class="course__cart-list">
+                    <li>{{ video_lectures_count }} видео лекций</li>
+                    <li>{{ text_documents_count }} текстовых документов</li>
+                    <li>{{ chapters.count }} глав</li>
+                    <li>{{ text_documents_count }} ресурсов для скачивания</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="course__details-header">
+        <div class="container">
+            <div class="course__details-header-wrapper">
+                <div class="details__header-category">
+                    {% for category in categories %}
+                    {{ category.name }}
+                    {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="details__header-title">{{ course.title }}</div>
+                <div class="details__header-subtitle">
+                    {{ course.second_text }}
+                </div>
+                <div class="details__header-rate">
+                    <div class="details__rate-reviews">(500 оценок)</div>
+                    <div class="details__rate-students">100 студентов</div>
+                </div>
+                <div class="details__header-author">Автор: <span>{{ course.teacher.user.first_name }}</span></div>
+                <div class="details__header-date">{{ course.created_at|date:"d.m.Y" }}</div>
+            </div>
+        </div>
+
+    </div>
+    <div class="course__details-description">
+        <div class="container">
+            <div class="course__description-wrapper">
+                <div class="course__description-text">
+                    <div class="course__description-title">
+                        Чему вы научитесь
+                    </div>
+                    <div class="course__description-text">
+                        {{ course.description }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="course__details-content">
+            <div class="course__content-title">
+                Материалы курса
+            </div>
+            <div class="course__content-short">
+                21 раздел • 217 лекций • Общая продолжительность 38 ч 48 мин
+            </div>
+            <ul class="course__content-list">
+                {% for chapter, lessons in lessons.items %}
+                <li>
+                    <div class="element__header">
+                        <div class="course__chapter-name">
+                            {{ chapter.name }}
+                        </div>
+                        <div class="course__chapter-duration">{{ lessons.count }} лекций</div>
+                    </div>
+                    <div class="element__content">
+                        <ul>
+                            {% for lesson in lessons %}
+                            <li>
+                                {% if lesson.lesson_type == "video" %}
+                                <img src="{% static 'img/icons/video.svg' %}" alt="">
+                                <a href="{{ lesson.video_url }}">{{ lesson.name }}</a>
+                                {% else %}
+                                <img src="{% static 'img/icons/file.svg' %}" alt="">
+
+                                <a href="{{ lesson.file.url }}">{{ lesson.name }}</a>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
