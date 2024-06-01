@@ -6,6 +6,8 @@ from django.http import HttpResponse
 from .forms import LoginForm,CustomUserCreationForm
 from .models import PupilProfile, TeacherProfile
 from django.contrib.auth import logout
+from .forms import CustomUserChangeForm, PupilProfileForm, TeacherProfileForm
+from .models import CustomUser, PupilProfile, TeacherProfile
 
 def login_view(request):
     error_messages = []
@@ -25,7 +27,6 @@ def login_view(request):
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form, 'error_messages': error_messages})
-
 
 def logout_view(request):
     logout(request)
@@ -47,3 +48,49 @@ def register(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
+
+
+@login_required
+def profile_view(request, section='profile'):
+    user = request.user
+    if hasattr(user, 'pupil_profile'):
+        profile = user.pupil_profile
+        profile_form_class = PupilProfileForm
+    elif hasattr(user, 'teacher_profile'):
+        profile = user.teacher_profile
+        profile_form_class = TeacherProfileForm
+    else:
+        profile = None
+        profile_form_class = None
+
+    if request.method == 'POST':
+        user_form = CustomUserChangeForm(request.POST, instance=user)
+        if profile:
+            profile_form = profile_form_class(request.POST, instance=profile)
+        if user_form.is_valid() and (not profile or profile_form.is_valid()):
+            user_form.save()
+            if profile:
+                profile_form.save()
+            return redirect('profile', section='profile')
+    else:
+        user_form = CustomUserChangeForm(instance=user)
+        if profile:
+            profile_form = profile_form_class(instance=profile)
+        else:
+            profile_form = None
+
+    templates = {
+        'profile': 'lk_edit.html',
+        'photo': 'lk_photo.html',
+        'purchased_courses': 'lk_purchased_courses.html',
+        'favorite_courses': 'lk_favorite_courses.html',
+    }
+
+    template = templates.get(section, 'lk_edit.html')
+
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'template': template,
+    }
+    return render(request, 'profile.html', context)

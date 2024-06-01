@@ -1,0 +1,37 @@
+{% load static %}
+
+<div class="lk__content">
+    <div class="lk__content-header">
+        <h1>Профиль</h1>
+        <h2>Добавьте информацию о себе</h2>
+    </div>
+    <form action="" method="post" class="lk__form">
+        {% csrf_token %}
+        <div class="form__title">Личные данные</div>
+        <div class="form__group">
+            <label for="id_email">Почта</label>
+            {{ user_form.email }}
+        </div>
+        <div class="form__group">
+            <label for="id_username">Логин</label>
+            {{ user_form.username }}
+        </div>
+        <div class="form__group">
+            <label for="id_first_name">Имя</label>
+            {{ user_form.first_name }}
+        </div>
+        <div class="form__group">
+            <label for="id_last_name">Фамилия</label>
+            {{ user_form.last_name }}
+        </div>
+        {% if profile_form %}
+            {% for field in profile_form %}
+                <div class="form__group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <button type="submit">Сохранить</button>
+    </form>
+</div>

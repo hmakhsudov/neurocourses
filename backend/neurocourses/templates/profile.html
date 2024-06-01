@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="lk">
+
+    <div class="container">
+        <div class="lk__wrapper">
+            <div class="lk__aside">
+                <div class="lk__avatar">{{ user.username|slice:":1" }}</div>
+                <div class="lk__login">{{ user.username }}</div>
+                <ul class="aside__list">
+                    <li><a href="{% url 'profile' 'profile' %}">Профиль</a></li>
+                    <li><a href="{% url 'profile' 'photo' %}">Фото</a></li>
+                    <li><a href="{% url 'profile' 'purchased_courses' %}">Приобретенные курсы</a></li>
+                    <li><a href="{% url 'profile' 'favorite_courses' %}">Избранные курсы</a></li>
+                </ul>
+            </div>
+            <div class="lk__content">
+                {% include template %}
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        
+        .lk {
+            padding: 20px;
+        }
+
+        
+        .lk__wrapper {
+            display: flex;
+            width: 100%;
+            border: 1px solid #D1D7DC;
+        }
+        
+        .lk__aside {
+            width: 25%;
+            background-color: #fff;
+            padding: 20px;
+            border-right: 1px solid #D1D7DC;
+        }
+        
+        .lk__avatar {
+            border-radius: 50%;
+            background-color: #2D2F31;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 48px;
+            font-weight: bold;
+            margin: 0 auto;
+            margin-bottom: 20px;
+        }
+        
+        .lk__login {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .aside__list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .aside__list li {
+            margin-bottom: 20px;
+        }
+        
+        .aside__list a {
+            color: #333;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        
+        .aside__list a:hover {
+            text-decoration: underline;
+        }
+        
+        .lk__content {
+            width: 70%;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .lk__content-header{
+            text-align: center;
+        }
+        
+        .lk__content-header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .lk__content-header h2 {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .lk__form {
+            width: 100%;
+            padding-left: 60px;
+            padding-right: 60px;
+            box-sizing: border-box;
+        }
+        
+        .form__title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .form__group {
+            margin-bottom: 20px;
+        }
+        
+        .form__group label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .form__group input[type="text"],
+        .form__group input[type="date"],
+        .form__group textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        
+        .form__group textarea {
+            resize: vertical;
+        }
+        
+        button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</section>
+
+
+
+{% endblock %}

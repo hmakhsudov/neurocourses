@@ -3,6 +3,7 @@ from django.urls import reverse
 from myauth.models import TeacherProfile
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
+from django.conf import settings
 
 
 
@@ -86,3 +87,45 @@ class Course(models.Model):
     
 
 
+class Enrollment(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    enrolled_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'course')
+        verbose_name = 'Enrollment'
+        verbose_name_plural = 'Enrollments'
+
+    def __str__(self):
+        return f"{self.user.username} enrolled in {self.course.title}"
+    
+    
+class Favorite(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    favorited_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'course')
+        verbose_name = 'Favorite'
+        verbose_name_plural = 'Favorites'
+
+    def __str__(self):
+        return f"{self.user.username} favorited {self.course.title}"
+    
+
+class Review(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    rating = models.PositiveIntegerField()
+    comment = models.TextField(blank=True, null=True)
+    reviewed_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'course')
+        verbose_name = 'Review'
+        verbose_name_plural = 'Reviews'
+
+    def __str__(self):
+        return f"Review by {self.user.username} for {self.course.title}"

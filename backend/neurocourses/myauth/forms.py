@@ -59,3 +59,26 @@ class CustomUserCreationForm(UserCreationForm):
         model = CustomUser
         fields = ('email', 'username', 'first_name', 'last_name', 'password1', 'password2', 'user_type')
     
+    
+    
+# forms.py
+from django import forms
+from django.contrib.auth.forms import UserChangeForm
+from .models import CustomUser, PupilProfile, TeacherProfile
+
+class CustomUserChangeForm(UserChangeForm):
+    email = forms.EmailField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'username', 'first_name', 'last_name']
+
+class PupilProfileForm(forms.ModelForm):
+    class Meta:
+        model = PupilProfile
+        fields = ['date_of_birth']
+
+class TeacherProfileForm(forms.ModelForm):
+    class Meta:
+        model = TeacherProfile
+        fields = ['bio', 'expertise']

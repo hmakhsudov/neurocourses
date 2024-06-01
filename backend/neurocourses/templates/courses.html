@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<section class="courses">
+
+    <div class="container">
+        <div class="courses__title">
+            <h1>Выберите любой курс</h1>
+        </div>
+        <h2>Начните с этих курсов</h2>
+        <h3>Ознакомтесь к курсами, которые проводят самые опытные эксперты</h3>
+        <ul class="courses__nav">
+            <li class="active"><a href="">Самые популярные</a></li>
+            <li><a href="">Новые</a></li>
+            <li><a href="">Случайные</a></li>
+        </ul>
+        <div class="courses__slider">
+            {% for course in courses %}
+            <a href="{% url 'course_details' course.id %}" class="course__card-link">
+                <div class="course__card">
+                    <img src="{{ course.image.url }}" alt="{{ course.title }}">
+                    <div class="course__card-title">{{ course.title }}</div>
+                    <div class="course__card-author">{{ course.teacher.user.first_name }} {{ course.teacher.user.last_name }}</div>
+                    <div class="course__card-price">
+                        {{ course.price }} Р
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="{% static 'js/slider.js' %}"></script>
+
+</section>
+<style>
+
+</style>
+{% endblock %}

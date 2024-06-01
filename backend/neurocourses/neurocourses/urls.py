@@ -16,20 +16,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from courses.views import IndexView, course_details
+from courses.views import IndexView, course_details, courses, course_search
 from django.conf import settings
 from django.conf.urls.static import static
-from myauth.views import login_view, register, logout_view
+from myauth.views import login_view, register, logout_view, profile_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='index'),
     path('login/', login_view, name='login'),
     path('register/', register, name='register'),
     path('logout/', logout_view, name='logout'),
+    path('courses/', courses, name='courses'),
+    
+    path('courses/search/', course_search, name='course_search'),
+
     path('course/<int:course_id>/', course_details, name='course_details'),
-
-
+    path('profile/<str:section>/', profile_view, name='profile'),
 
 ]  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
+
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

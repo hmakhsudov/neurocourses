@@ -7,6 +7,20 @@ class IndexView(View):
     def get(self, request):
         return render(request, 'index.html')
 
+
+
+def courses(request):
+    all_courses = Course.objects.all()
+    return render(request, 'courses.html', {'courses': all_courses})
+
+def course_search(request):
+    query = request.GET.get('q')
+    if query:
+        courses = Course.objects.filter(title__icontains=query)
+    else:
+        courses = Course.objects.all()
+    return render(request, 'courses_search.html', {'courses': courses, 'query': query})
+
 def course_details(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     chapters = Chapter.objects.filter(course=course).order_by('chapter_index')
